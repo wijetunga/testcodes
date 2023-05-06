@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+  <filepath>/path/to/file</filepath>
+  <cities>
+    <city>
+      <name>New York</name>
+      <population>8,336,817</population>
+      <distance>2,485 miles</distance>
+      <age>391 years</age>
+    </city>
+    <city>
+      <name>San Diego</name>
+      <population>1,425,976</population>
+      <distance>2,634 miles</distance>
+      <age>253 years</age>
+    </city>
+    <city>
+      <name>Troy</name>
+      <population>49,154</population>
+      <distance>162 miles</distance>
+      <age>232 years</age>
+    </city>
+  </cities>
+</properties>
