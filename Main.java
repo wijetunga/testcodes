@@ -1,12 +1,11 @@
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 class XMLParserExample {
 
@@ -19,35 +18,31 @@ class XMLParserExample {
         File xmlFile = new File("data.xml");
         Document document = builder.parse(xmlFile);
 
-        // Get the root element
+        // Get the changefield element and create a map to store the change data
+        Map<String, Map<String, String>> changeData = new HashMap<>();
         Element rootElement = document.getDocumentElement();
-
-        // Get the filepath element
-        String filepath = rootElement.getElementsByTagName("filepath").item(0).getTextContent();
-
-        // Get the cities element and create a map to store the city data
-        Map<String, Map<String, String>> citiesMap = new HashMap<>();
-        NodeList cityNodes = rootElement.getElementsByTagName("city");
-        for (int i = 0; i < cityNodes.getLength(); i++) {
-            Element cityElement = (Element) cityNodes.item(i);
-            String cityName = cityElement.getAttribute("name");
-            Map<String, String> cityData = new HashMap<>();
-            cityData.put("population", cityElement.getAttribute("population"));
-            cityData.put("distance", cityElement.getAttribute("distance"));
-            cityData.put("age", cityElement.getAttribute("age"));
-            citiesMap.put(cityName, cityData);
+        NodeList changeNodes = rootElement.getElementsByTagName("changethisfield");
+        for (int i = 0; i < changeNodes.getLength(); i++) {
+            Element changeElement = (Element) changeNodes.item(i);
+            String fieldName = changeElement.getAttribute("name");
+            Map<String, String> fieldData = new HashMap<>();
+            fieldData.put("source", changeElement.getAttribute("source"));
+            fieldData.put("startat", changeElement.getAttribute("startat"));
+            fieldData.put("endat", changeElement.getAttribute("endat"));
+            fieldData.put("length", changeElement.getAttribute("length"));
+            changeData.put(fieldName, fieldData);
         }
 
         // Print the data
-        System.out.println("Filepath: " + filepath);
-        System.out.println("Cities:");
-        for (Map.Entry<String, Map<String, String>> entry : citiesMap.entrySet()) {
-            String cityName = entry.getKey();
-            Map<String, String> cityData = entry.getValue();
-            System.out.println(cityName + ":");
-            System.out.println("\tPopulation: " + cityData.get("population"));
-            System.out.println("\tDistance: " + cityData.get("distance"));
-            System.out.println("\tAge: " + cityData.get("age"));
+        System.out.println("Change Data:");
+        for (Map.Entry<String, Map<String, String>> entry : changeData.entrySet()) {
+            String fieldName = entry.getKey();
+            Map<String, String> fieldData = entry.getValue();
+            System.out.println(fieldName + ":");
+            System.out.println("\tSource: " + fieldData.get("source"));
+            System.out.println("\tStart At: " + fieldData.get("startat"));
+            System.out.println("\tEnd At: " + fieldData.get("endat"));
+            System.out.println("\tLength: " + fieldData.get("length"));
         }
     }
 }
